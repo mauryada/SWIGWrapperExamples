@@ -1,0 +1,52 @@
+This is an example of wrapping a C code in python using SWIG
+
+Files Created:
+
+gfg.C => This file contains the implementation of our C code
+gfg.h => This is the header file for the source code
+https://www.geeksforgeeks.org/wrapping-cc-python-using-swig-set-1/
+
+gfg.i => This is an Interface file for SWIG to generate the wrapper class. This file contains all the function and variable decleration in gfg.c
+
+Files Generated:
+
+1. After running 'swig -python gfg.i'
+gfg_wrap.c is created along with gfg.py
+
+2. a. Now to compile our wrapper code with the source code we run the command 'gcc -c -fpic gfg_wrap.c gfg.c -I/usr/include/python3.5/'
+this will generate gfg_wrap.o and gfg.o
+
+2. b. if there is an error "...Python.h" file not found:
+	i)  Either you do not have Python.h: To install sudo apt-get install python-dev
+
+	ii) Or you do not have the correct path for Python.h: To find the path run the command 		    python-config --cflags
+
+3. After running 'gcc -shared gfg.o gfg_wrap.o -o _gfg.so' 
+	It will generate a '_fileName_.so' file which is the module we can import in python
+
+Testing the module:
+
+1. Create a python file in the same directory or open the python shell from the terminal in the same directory and "import gfg"
+
+>>> import gfg
+>>> res = fact(5)
+>>> res
+120
+>>> res = my_mod(5,2)
+>>> res
+1
+>>> gfg.cvar.myvar
+3.4
+
+Python 3.5.2 (default, Nov 12 2018, 13:43:14) 
+[GCC 5.4.0 20160609] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import gfg
+>>> gfg.get_str()
+'this is a test string'
+>>> x = gfg.get_str()
+>>> x
+'this is a test string'
+>>> type(x)
+<class 'str'>
+>>> 

@@ -1,0 +1,79 @@
+reThis is an example of wrapping a C code in python using SWIG
+
+Files Created:
+
+gfg.C => This file contains the implementation of our C code
+gfg.h => This is the header file for the source code
+https://www.geeksforgeeks.org/wrapping-cc-python-using-swig-set-1/
+
+gfg.i => This is an Interface file for SWIG to generate the wrapper class. This file contains all the function and variable decleration in gfg.c
+
+Files Generated:
+
+1. After running 'swig -python gfg.i'
+gfg_wrap.c is created along with gfg.py
+
+2. a. Now to compile our wrapper code with the source code we run the command 'gcc -c -fpic gfg_wrap.c gfg.c -I/usr/include/python3.5/'
+this will generate gfg_wrap.o and gfg.o
+
+2. b. if there is an error "...Python.h" file not found:
+	i)  Either you do not have Python.h: To install sudo apt-get install python-dev
+
+	ii) Or you do not have the correct path for Python.h: To find the path run the command 		    python-config --cflags
+
+3. After running 'gcc -shared gfg.o gfg_wrap.o -o _gfg.so' 
+	It will generate a '_fileName_.so' file which is the module we can import in python
+
+Testing the module:
+
+1. Create a python file in the same directory or open the python shell from the terminal in the same directory and "import gfg"
+
+>>> import gfg
+>>> res = fact(5)
+>>> res
+120
+>>> res = my_mod(5,2)
+>>> res
+1
+>>> gfg.cvar.myvar
+3.4
+
+Python 3.5.2 (default, Nov 12 2018, 13:43:14) 
+[GCC 5.4.0 20160609] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import gfg
+>>> gfg.populate_a()
+j = 0.00 /t k = 1.00 
+j = 0.03 /t k = 1.07 
+j = 0.07 /t k = 1.14 
+j = 0.10 /t k = 1.21 
+j = 0.14 /t k = 1.28 
+j = 0.17 /t k = 1.34 
+j = 0.21 /t k = 1.41 
+j = 0.24 /t k = 1.48 
+j = 0.28 /t k = 1.55 
+j = 0.31 /t k = 1.62 
+>>> gfg.a_get(2)
+(0.06896551724137931+1.1379310344827587j)
+>>> print(gfg.a_get(2))
+(0.06896551724137931+1.1379310344827587j)
+>>> print("".format(gfg.a_get(2)))
+>>> n = gfg.a_get(2)
+>>> '({0.real:.2f} + {0.imag:.2f}i)'.format(n)
+'(0.07 + 1.14i)'
+>>> print('({0.real:.2f} + {0.imag:.2f}i)'.format(n))
+(0.07 + 1.14i)
+>>> 
+>>> gfg.a_get(2)
+(0.06896551724137931+1.1379310344827587j)
+>>> val = complex(2,3)
+>>> val
+(2+3j)
+>>> gfg.a_set(2,val)
+>>> gfg.a_get(2)
+(2+3j)
+>>> val = complex(2.423,3.6453)
+>>> gfg.a_set(2,val)
+>>> gfg.a_get(2)
+(2.423+3.6453j)
+>>> 

@@ -1,0 +1,14 @@
+Here are the following steps and results of those step necessary to make this work.
+
+Files created:
+src/hw.h : Header file for our implementation
+src/hw.c : The source code for you C implementation
+
+hw.i : The swig interface file, It includes the C implementation as a module and compile it before it handles the interface with python
+
+
+Compilation Steps:
+After creating the C implementation and the interface file, install swig using 'sudo apt install swig'. There are two options swig and swig2.0. I have not tried swig2.0 yet since I couldn't fine documentation on swig2.0.
+To compile the C implementation in the swig interface file and to generate the wrapper code, use the terminal command 'swig -python -Isrc hw.i'
+
+This will generate hw_wrap.c which is a wrapper file in C.
